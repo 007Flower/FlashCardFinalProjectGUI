@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Flashcards</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <h1>Flashcard Deck</h1>
+  <a href="/add">+ Add New Card</a>
+
+  <div class="deck-container">
+    <button class="arrow left" onclick="showPrev()">&#8592;</button>
+
+    <div class="flashcard-stack">
+      <% flashcards.forEach((card, index) => { %>
+        <div class="flashcard <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>">
+          <div class="card-inner" onclick="flipCard(this)">
+            <div class="front"><%= card.name %></div>
+            <div class="back"><%= card.description %></div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+    <button class="arrow right" onclick="showNext()">&#8594;</button>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const cards = document.querySelectorAll('.flashcard');
+
+    function updateView() {
+      cards.forEach((card, idx) => {
+        card.classList.remove('active');
+        if (idx === currentIndex) {
+          card.classList.add('active');
+        }
+      });
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % cards.length;
+      updateView();
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      updateView();
+    }
+
+    function flipCard(cardEl) {
+      cardEl.classList.toggle('flipped');
+    }
+  </script>
+</body>
+</html>

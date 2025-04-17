@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Flashcard</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <h1>Add a New Flashcard</h1>
+  <form action="/add" method="POST">
+    <input type="text" name="name" placeholder="Card Name" required />
+    <textarea name="description" placeholder="Description" required></textarea>
+    <button type="submit">Add Card</button>
+  </form>
+  <a href="/manage">Go to Manage Cards</a>
+</body>
+</html>

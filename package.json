@@ -1,0 +1,22 @@
+{
+  "name": "flashcard",
+  "version": "1.0.0",
+  "description": "FinalProject",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": " nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dylan Castellanos & Ian Burns",
+  "license": "ISC",
+  "devDependencies": {
+    "ejs": "^3.1.10",
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.14.1"
+  }
+}
