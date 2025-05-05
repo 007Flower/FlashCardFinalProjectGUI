@@ -20,9 +20,19 @@
     <% } %>
     <form action="/add" method="POST" class="add-flashcard-form">
       <label for="name">Card Name</label>
-      <input type="text" id="name" name="name" placeholder="Card Name" value="<%= typeof name !== 'undefined' ? name : '' %>" />
+      <input type="text" id="name" name="name" placeholder="Card Name" value="<%= typeof name !== 'undefined' ? name : '' %>" class="<%= errors && errors.name ? 'input-error' : '' %>" />
+      <% if (errors && errors.name) { %>
+        <div class="error-message" style="color: red; margin-top: 0.25em; margin-bottom: 1em;">
+          <%= errors.name %>
+        </div>
+      <% } %>
       <label for="description">Description</label>
-      <textarea id="description" name="description" placeholder="Description"><%= typeof description !== 'undefined' ? description : '' %></textarea>
+      <textarea id="description" name="description" placeholder="Description" class="<%= errors && errors.description ? 'input-error' : '' %>"><%= typeof description !== 'undefined' ? description : '' %></textarea>
+      <% if (errors && errors.description) { %>
+        <div class="error-message" style="color: red; margin-top: 0.25em; margin-bottom: 1em;">
+          <%= errors.description %>
+        </div>
+      <% } %>
       <label for="deckid">Select Deck:</label>
       <select name="deckid" id="deckid" required>
         <% decks.forEach(deck => { %>

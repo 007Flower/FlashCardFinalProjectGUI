@@ -17,7 +17,7 @@ import {
 
 export const getAddPage = async (req, res) => {
   const decks = await getAllDecks();
-  res.render('add', { decks });
+  res.render('add', { decks, errors: {}, name: '', description: '', deckid: '' });
 };
 
 export const getDecksPage = async (req, res) => {
@@ -67,13 +67,24 @@ export const postDeleteDeck = async (req, res) => {
 
 export const postAddFlashcard = async (req, res) => {
   const { name, description, deckid } = req.body;
+  const errors = {};
+  if (!name || typeof name !== 'string' || name.trim() === '') {
+    errors.name = 'Flashcard name is required and must be a non-empty string';
+  }
+  if (!description || typeof description !== 'string' || description.trim() === '') {
+    errors.description = 'Flashcard description is required and must be a non-empty string';
+  }
+  if (Object.keys(errors).length > 0) {
+    const decks = await getAllDecks();
+    return res.status(400).render('add', { decks, errors, name, description, deckid });
+  }
   try {
     await addFlashcard(name, description, deckid);
     res.redirect('/add'); // Redirect back to Add page
   } catch (error) {
+    // fallback error handling
     const decks = await getAllDecks();
-    const { name, description, deckid } = req.body;
-    res.status(400).render('add', { decks, error: error.message, name, description, deckid });
+    res.status(500).render('add', { decks, errors: { general: 'An unexpected error occurred' }, name, description, deckid });
   }
 };
 

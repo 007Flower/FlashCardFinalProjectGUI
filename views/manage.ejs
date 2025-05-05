@@ -46,7 +46,7 @@
     }
     .flashcard-stack {
       position: relative;
-      width: 90vw;
+      width: 70vw;
       height: 70vh;
       perspective: 1200px;
       margin-bottom: 24px;
@@ -142,7 +142,6 @@
 
     <div class="deck-container">
       <div class="flashcard-stack">
-        <button class="arrow left" onclick="showPrev()">&#8592;</button>
 
         <% flashcards.forEach((card, i) => { %>
           <div class="flashcard <%= i === 0 ? 'active' : '' %>" data-index="<%= i %>">
@@ -153,11 +152,13 @@
           </div>
         <% }) %>
 
-        <button class="arrow right" onclick="showNext()">&#8594;</button>
       </div>
 
-      <!-- Card Counter -->
-      <div id="card-counter" class="card-counter">1 / <%= flashcards.length %></div>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px;">
+        <button class="arrow left" onclick="showPrev()" style="position: static; transform: none;">&#8592;</button>
+        <div id="card-counter" class="card-counter" style="margin: 0;">1 / <%= flashcards.length %></div>
+        <button class="arrow right" onclick="showNext()" style="position: static; transform: none;">&#8594;</button>
+      </div>
     </div>
   </div>
 

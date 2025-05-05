@@ -506,6 +506,12 @@ li {
   outline: none;
 }
 
+/* Input error highlight */
+.input-error {
+  border: 2px solid red !important;
+  outline: none;
+}
+
 .add-flashcard-form label {
   font-weight: 600;
   font-size: 1rem;
