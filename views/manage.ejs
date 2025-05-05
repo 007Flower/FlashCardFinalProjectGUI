@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Flashcards</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      width: 100%; max-width: 960px;
+      padding: 24px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    nav a {
+      padding: 8px 16px;
+      background: #e9f0ff;
+      color: #007bff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    nav a:hover { background: #c7d9ff; }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      color: #222;
+    }
+
+    .deck-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .flashcard-stack {
+      position: relative;
+      width: 90vw;
+      height: 70vh;
+      perspective: 1200px;
+      margin-bottom: 24px;
+    }
+    .flashcard {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+    .flashcard.active { display: block; }
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .card-inner.flipped { transform: rotateY(180deg); }
+    .front, .back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .front {
+      background: #fff;
+      border: 2px solid #007bff;
+      color: #222;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+    .back {
+      background: #007bff;
+      color: #fff;
+      transform: rotateY(180deg);
+      font-size: 1.6rem;
+      padding: 32px;
+    }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,123,255,0.1);
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 2rem;
+      color: #007bff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .arrow.left { left: -64px; }
+    .arrow.right { right: -64px; }
+    .arrow:hover { background: rgba(0,86,179,0.2); }
+
+    .card-counter {
+      font-size: 1.2rem;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 700px) {
+      .arrow { display: none; }
+      .flashcard-stack { width: 90vw; height: 50vh; }
+      nav { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a href="/decks">Decks</a>
+      <a href="/add">Add Flashcard</a>
+      <a href="/manageall">Manage Flashcards</a>
+    </nav>
+
+    <div class="deck-container">
+      <div class="flashcard-stack">
+        <button class="arrow left" onclick="showPrev()">&#8592;</button>
+
+        <% flashcards.forEach((card, i) => { %>
+          <div class="flashcard <%= i === 0 ? 'active' : '' %>" data-index="<%= i %>">
+            <div class="card-inner" onclick="flipCard(this)">
+              <div class="front"><%= card.name %></div>
+              <div class="back"><%= card.description %></div>
+            </div>
+          </div>
+        <% }) %>
+
+        <button class="arrow right" onclick="showNext()">&#8594;</button>
+      </div>
+
+      <!-- Card Counter -->
+      <div id="card-counter" class="card-counter">1 / <%= flashcards.length %></div>
+    </div>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    let cards;
+
+    function updateView() {
+      cards.forEach((c, i) => c.classList.toggle('active', i === currentIndex));
+      const counter = document.getElementById('card-counter');
+      if (counter && cards.length > 0) {
+        counter.textContent = `${currentIndex + 1} / ${cards.length}`;
+      }
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % cards.length;
+      updateView();
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      updateView();
+    }
+
+    function flipCard(el) {
+      el.classList.toggle('flipped');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      cards = document.querySelectorAll('.flashcard');
+      updateView();
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') showNext();
+        if (e.key === 'ArrowLeft') showPrev();
+      });
+    });
+  </script>
+</body>
+</html>

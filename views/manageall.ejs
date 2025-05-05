@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Manage All Flashcards</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script>
+     async function deleteFlashcard(cardId, deckId) {
+        if (confirm('Are you sure you want to delete this flashcard?')) {
+          const res = await fetch(`/delete/${cardId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ deckId })
+          });
+
+          if (res.ok) {
+            location.reload(); // Refresh the page after deletion
+          } else {
+            alert('Failed to delete flashcard.');
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="/decks">Decks</a>
+        <a href="/add">Add Flashcard</a>
+        <a href="/manageall">Manage Flashcards</a>
+      </nav>
+
+      <h1>Manage All Flashcards</h1>
+
+      <form action="/manageall/update" method="POST">
+        <ul>
+          <% for(let i=0; i < decks.length; i++) { 
+               let deck = decks[i]; %>
+            <li>
+              <ul>
+                <% for(let j=0; j < flashcards.length; j++) {
+                     let card = flashcards[j];
+                     if(card.deckid == deck.id) { %>
+                  <li>
+                    <input type="hidden" name="cardIds[]" value="<%= card.id %>" />
+                    <input type="text" name="cardNames[]" value="<%= card.name %>" required />
+                    <input type="text" name="cardDescriptions[]" value="<%= card.description %>" required />
+                    <button type="button" class="danger"  onclick="deleteFlashcard(<%= card.id %>, <%= deck.id %>)"        ">Delete</button>
+                  </li>
+                <%   } 
+                   } %>
+              </ul>
+            </li>
+          <% } %>
+        </ul>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </body>
+</html>

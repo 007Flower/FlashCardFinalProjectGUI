@@ -1,0 +1,648 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f0f2f5;
+  text-align: center;
+  color: #333;
+}
+
+h1 {
+  margin-bottom: 30px;
+  color: #222;
+}
+
+a {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Navigation */
+nav {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: #e9f0ff;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #c7d9ff;
+}
+
+/* Deck Layout using Grid */
+.deck-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Flashcard Stack */
+.flashcard-stack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 640px;
+  height: 420px;
+  margin: 0 auto;
+  perspective: 1000px;
+  gap: 12px;
+}
+
+/* Arrows */
+.arrow {
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.arrow:hover {
+  background-color: #0056b3;
+}
+
+/* Decks Page - ul grid */
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  list-style-type: none;
+  padding: 0;
+  max-width: 720px;
+  margin: 0 auto 24px auto;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+li:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.deck-link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 20px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.deck-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Links styled as buttons */
+a.btn-primary, a.btn-secondary {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+a.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+a.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+a.btn-secondary {
+  background-color: #28a745;
+  color: white;
+}
+
+a.btn-secondary:hover {
+  background-color: #1e7e34;
+}
+
+/* Navigation Arrows */
+.arrow {
+  padding: 10px 15px;
+  font-size: 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.arrow:hover {
+  background-color: #0056b3;
+}
+
+/* Flashcard Stack */
+.flashcard-stack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 320px;
+  height: 220px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.flashcard {
+  margin: 0 auto;
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  background: white;
+}
+
+.flashcard.active {
+  display: block;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #222;
+  box-sizing: border-box;
+}
+
+.back {
+  transform: rotateY(180deg);
+  background: #007bff;
+  color: white;
+}
+
+/* Form Styling (Add Page) */
+form {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+input[type="text"],
+textarea,
+select {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Decks Page using Grid */
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px;
+  list-style-type: none;
+  padding: 0;
+  max-width: 960px;
+  margin: 0 auto 24px auto;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.deck-link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 20px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.deck-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.deck-view {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.deck-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.deck-edit input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+.deck-edit button {
+  padding: 8px 14px;
+  font-size: 15px;
+  border-radius: 6px;
+}
+
+.deck-edit button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.deck-edit button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.deck-edit button[formaction*="delete"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deck-edit button[formaction*="delete"]:hover {
+  background-color: #a71d2a;
+}
+
+/* Manage Page */
+.manage-card {
+  width: 340px;
+  margin: 14px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.12);
+  padding: 14px;
+  background: white;
+}
+
+.card-view {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.card-view .front,
+.card-view .back {
+  position: static;
+  width: auto;
+  height: auto;
+  font-size: 22px;
+  margin-bottom: 14px;
+  color: #222;
+  box-shadow: none;
+}
+
+.card-view .back {
+  transform: none;
+  background: transparent;
+}
+
+.card-view button.edit-btn {
+  padding: 8px 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-view button.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.card-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-edit input[type="text"],
+.card-edit textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.card-edit input[type="text"]:focus,
+.card-edit textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.card-edit button {
+  width: fit-content;
+  padding: 8px 14px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-edit button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.card-edit button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.card-edit button[formaction*="delete"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.card-edit button[formaction*="delete"]:hover {
+  background-color: #a71d2a;
+}
+
+/* Responsive Design */
+@media (max-width: 700px) {
+  body {
+    padding: 12px;
+  }
+  nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .deck-container {
+    grid-template-columns: 1fr;
+  }
+  .flashcard-stack {
+    width: 90%;
+    height: 220px;
+  }
+  ul {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+  .manage-card {
+    width: 100%;
+  }
+}
+
+/* Add Flashcard Form Improvements */
+.add-flashcard-form {
+  max-width: 480px;
+  margin: 0 auto 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-flashcard-form input[type="text"],
+.add-flashcard-form textarea,
+.add-flashcard-form select {
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+}
+
+.add-flashcard-form input[type="text"]:focus,
+.add-flashcard-form textarea:focus,
+.add-flashcard-form select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.add-flashcard-form label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.add-flashcard-form button {
+  padding: 14px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-flashcard-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Hide edit controls by default */
+.deck-edit-controls.hidden,
+.flashcard-edit-controls.hidden {
+  display: none;
+}
+
+/* Style for edit controls */
+.deck-edit-controls button,
+.flashcard-edit-controls button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.deck-edit-controls button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.deck-edit-controls button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.deck-edit-controls button[formaction*="delete"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deck-edit-controls button[formaction*="delete"]:hover {
+  background-color: #a71d2a;
+}
+
+.flashcard-edit-controls button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.flashcard-edit-controls button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.flashcard-edit-controls button[formaction*="delete"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.flashcard-edit-controls button[formaction*="delete"]:hover {
+  background-color: #a71d2a;
+}
+/* Modal styles */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close:hover {
+  color: #000;
+}
+
+/* Style for toggle buttons */
+#toggleEditDecksBtn,
+#toggleEditCardsBtn {
+  margin: 20px 0;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,123,255,0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#toggleEditDecksBtn:hover,
+#toggleEditCardsBtn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 12px rgba(0,86,179,0.6);
+}

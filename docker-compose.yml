@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16
+    container_name: flashcard-db
+    environment:
+      POSTGRES_USER: flashcard
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: flashcard
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

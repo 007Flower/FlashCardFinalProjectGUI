@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add Flashcard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+<body>
+  <div class="container">
+    <nav>
+      <a href="/decks">Decks</a>
+      <a href="/add">Add Flashcard</a>
+      <a href="/manageall">Manage Flashcards</a>
+    </nav>
+    <h1>Add a New Flashcard</h1>
+    <% if (typeof error !== 'undefined') { %>
+      <div class="error-message" style="color: red; margin-bottom: 1em;">
+        <%= error %>
+      </div>
+    <% } %>
+    <form action="/add" method="POST" class="add-flashcard-form">
+      <label for="name">Card Name</label>
+      <input type="text" id="name" name="name" placeholder="Card Name" value="<%= typeof name !== 'undefined' ? name : '' %>" />
+      <label for="description">Description</label>
+      <textarea id="description" name="description" placeholder="Description"><%= typeof description !== 'undefined' ? description : '' %></textarea>
+      <label for="deckid">Select Deck:</label>
+      <select name="deckid" id="deckid" required>
+        <% decks.forEach(deck => { %>
+          <option value="<%= deck.id %>" <%= (typeof deckid !== 'undefined' && deckid == deck.id) ? 'selected' : '' %>><%= deck.name %></option>
+        <% }) %>
+      </select>
+      <button type="submit" class="btn-primary">Add Card</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Decks</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a href="/decks">Decks</a>
+      <a href="/add">Add Flashcard</a>
+      <a href="/manageall">Manage Flashcards</a>
+      <a href="#" id="openModalBtn">Add Deck</a>
+
+    </nav>
+
+    <h1>Decks</h1>
+
+    <ul>
+      <% decks.forEach(deck => { %>
+        <li>
+          <a class="deck-link"><%= deck.name %></a>
+          <a href="/deck/update/<%= deck.id %>" class="btn-primary">edit</a>
+          <a href="/deck/<%= deck.id %>" class="btn-secondary">study mode</a>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <!-- Add Deck Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModalBtn" class="close">&times;</span>
+      <h2>Add New Deck</h2>
+      <form action="/decks" method="POST" class="add-flashcard-form">
+        <input type="text" name="name" placeholder="New Deck Name" required />
+        <button type="submit" class="btn-primary">Add Deck</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    openModalBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.remove('hidden');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
